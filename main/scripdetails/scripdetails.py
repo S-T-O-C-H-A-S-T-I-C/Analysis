@@ -8,7 +8,12 @@ def getScripDetaile(scrip):
 
     endTime = datetime.datetime.today()
     startTime = datetime.datetime(2018, 8, 1)
+
+    '''Getting scrip history details from yahoo finance'''
     df = web.DataReader(scrip, "yahoo", startTime, endTime)
     filename = scrip + ".csv"
     df.to_csv(filename)
-    return filename
+    closingPrice = df.iloc[1:, -1]
+
+    '''print(closingPrice)'''
+    return closingPrice, filename
