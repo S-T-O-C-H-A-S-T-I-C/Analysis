@@ -1,0 +1,1 @@
+sizeOfIndicatorsList = 120
