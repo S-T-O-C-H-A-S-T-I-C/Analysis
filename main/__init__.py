@@ -1,20 +1,21 @@
 from scripdetails import scripdetails
-from stockstats import StockDataFrame
 import pandas as pd
-import talib
-import numpy
+from indicators import adx, ema, rsi
+from scrips import nsescrips
+from comparators import TA
 
 
 if __name__ == '__main__':
 
-    filename = scripdetails.getScripDetaile("hindalco.ns")
-    stock = StockDataFrame.retype(pd.read_csv(filename))
-
-    emaclose = talib.EMA(stock['close'], 40)
-    print(emaclose)
-
-    adx = talib.ADX(stock['high'], stock['low'], stock['close'], 14)
-    print(adx)
-
-    rsi = talib.RSI(stock['close'], 14)
-    print(rsi)
+    shortList = list()
+    stocks = nsescrips.getNSEscrips()
+    for scrip in stocks:
+        filename = scripdetails.getScripDetaile(scrip + ".NS")
+        stock = pd.read_csv(filename)
+        ema_40 = list(ema.getEMA(stock, 40))
+        adx_14 = list(adx.getADX(stock, 14))
+        rsi_14 = list(rsi.getRSI(stock, 14))
+        closingPrice = list(stock['Close'])
+        if TA.isItBullish(ema_40[-1], rsi_14[-1], adx_14[-1], closingPrice[-1]):
+            shortList.append(scrip)
+            print(scrip)

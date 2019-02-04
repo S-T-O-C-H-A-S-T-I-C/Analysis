@@ -1,11 +1,8 @@
 import pandas_datareader.data as web
 import datetime
-import logging
 
 
 def getScripDetaile(scrip):
-    logging.log(0, "Getting scrip details: " + scrip)
-
     endTime = datetime.datetime.today()
     startTime = datetime.datetime(2016, 1, 1)
 
