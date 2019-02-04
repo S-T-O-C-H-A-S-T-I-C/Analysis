@@ -1,11 +1,20 @@
 from scripdetails import scripdetails
-from indicators import sma40, ema40
-if __name__ == '__main__':
-    closingPriceDF, filename = scripdetails.getScripDetaile("hindalco.ns")
-    closingPriceDF = reversed(closingPriceDF)
-    priceList = [price for price in closingPriceDF]
-    sma40List = sma40.sma40(priceList)
-    print(sma40List[:10])
+from stockstats import StockDataFrame
+import pandas as pd
+import talib
+import numpy
 
-    ema40List = ema40.ema40(priceList, sma40List)
-    print(ema40List[:10])
+
+if __name__ == '__main__':
+
+    filename = scripdetails.getScripDetaile("hindalco.ns")
+    stock = StockDataFrame.retype(pd.read_csv(filename))
+
+    emaclose = talib.EMA(stock['close'], 40)
+    print(emaclose)
+
+    adx = talib.ADX(stock['high'], stock['low'], stock['close'], 14)
+    print(adx)
+
+    rsi = talib.RSI(stock['close'], 14)
+    print(rsi)

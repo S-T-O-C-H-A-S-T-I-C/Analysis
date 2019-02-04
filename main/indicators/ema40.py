@@ -1,5 +1,4 @@
 from constants import sizeOfIndicatorsList
-
 def ema40(priceList, sma40List):
     ema40List = sma40List
     idx = sizeOfIndicatorsList - 1
