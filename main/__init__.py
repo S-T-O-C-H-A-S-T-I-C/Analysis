@@ -1,21 +1,29 @@
-from scripdetails import scripdetails
-import pandas as pd
-from indicators import adx, ema, rsi
 from scrips import nsescrips
-from comparators import TA
+from graphScales import dailyCandles, hourCandles
 
 
 if __name__ == '__main__':
 
     shortList = list()
     stocks = nsescrips.getNSEscrips()
-    for scrip in stocks:
-        filename = scripdetails.getScripDetaile(scrip + ".NS")
-        stock = pd.read_csv(filename)
-        ema_40 = list(ema.getEMA(stock, 40))
-        adx_14 = list(adx.getADX(stock, 14))
-        rsi_14 = list(rsi.getRSI(stock, 14))
-        closingPrice = list(stock['Close'])
-        if TA.isItBullish(ema_40[-1], rsi_14[-1], adx_14[-1], closingPrice[-1]):
-            shortList.append(scrip)
-            print(scrip)
+    # for scrip in stocks:
+    #     filename = scripdetails.getScripDetaile(scrip + ".NS")
+    #     stock = pd.read_csv(filename)
+    #     ema_13 = list(ema.getEMA(stock, 13))
+    #     ema_5 = list(ema.getEMA(stock, 5))
+    #     ema_8 = list(ema.getEMA(stock, 8))
+    #     adx_14 = list(adx.getADX(stock, 14))
+    #     rsi_14 = list(rsi.getRSI(stock, 14))
+    #     closingPrice = list(stock['Close'])
+    #     if TAStrat2.isItBullish(scrip, ema_5, ema_8, ema_13, rsi_14, adx_14, closingPrice):
+    #         shortList.append(scrip)
+    #         print("BUY", scrip)
+    # dailyCandleBullish = dailyCandles.findBullishStocks(stocks)
+    # print("Bullish stocks on basis of daily candles: ")
+    # for stock in dailyCandleBullish:
+    #     print(stock)
+
+    hourCandlesBullish = hourCandles.findBullishStocks(stocks)
+    print("\nBullish stocks on basis of hourly candles: ")
+    for stock in hourCandlesBullish:
+        print(stock)
